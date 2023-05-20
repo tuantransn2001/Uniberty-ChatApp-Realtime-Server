@@ -2,11 +2,10 @@ import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema(
   {
-    id: { type: String },
-    name: { type: String },
-    password: { type: String },
+    db_id: { type: String },
+    chat_id: { type: String },
     type: { type: String },
-    contactList: { type: [String] },
+    contactList: { type: Object },
     status: {
       type: String,
       default: "offline",
