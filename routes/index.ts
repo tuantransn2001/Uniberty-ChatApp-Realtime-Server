@@ -1,12 +1,8 @@
 import { Router } from "express";
-import errorHandler from "../middlewares/errorHandler";
-import Controller from "../controllers";
+import conversationRouter from "./conversation.router";
+
 const rootRouter = Router();
 
-rootRouter.get(
-  "/get-conversation-by-id-list",
-  Controller.getConversationByMemberIDList,
-  errorHandler
-);
+rootRouter.use("/conversation", conversationRouter);
 
 export default rootRouter;
