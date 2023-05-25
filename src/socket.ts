@@ -1,13 +1,15 @@
 import { v4 as uuidv4 } from "uuid";
 import { Server, Socket } from "socket.io";
 import { sortStringArray } from "../src/common";
-
-import User from "../Model/User";
-import Conversation from "../Model/Conversation";
+import logger from "../src/utils/logger";
+import User from "../models/User";
+import Conversation from "../models/Conversation";
 import {
   ConversationAttributes,
   UserAttributes,
 } from "./ts/interfaces/app_interfaces";
+import RestFullAPI from "./utils/apiResponse";
+import { STATUS_CODE, STATUS_MESSAGE } from "./ts/enums/api_enums";
 
 const EVENTS = {
   connection: "connection",
@@ -38,16 +40,16 @@ const EVENTS = {
 };
 
 function socket({ io }: { io: Server }) {
-  console.log(`Sockets enabled`);
+  logger.info(`Sockets enabled`);
 
   io.on(EVENTS.connection, (socket: Socket) => {
-    console.log(`User connected ${socket.id}`);
+    logger.info(`User connected ${socket.id}`);
 
     /*
      * Set user status online
      */
     socket.on(EVENTS.SERVER.STATUS.ONLINE, (currentUserLoginID: string) => {
-      console.log(`${currentUserLoginID} is online`);
+      logger.info(`${currentUserLoginID} is online`);
       (async () => {
         await User.updateOne(
           { id: currentUserLoginID },
@@ -61,7 +63,7 @@ function socket({ io }: { io: Server }) {
      * Set user status offline
      */
     socket.on(EVENTS.SERVER.STATUS.OFFLINE, (currentUserLoginID: string) => {
-      console.log(`${currentUserLoginID} is offline`);
+      logger.info(`${currentUserLoginID} is offline`);
       (async () => {
         await User.updateOne(
           { id: currentUserLoginID },
@@ -112,8 +114,14 @@ function socket({ io }: { io: Server }) {
           socket.join(severRoomID);
           socket.emit(
             EVENTS.SERVER.CREATED_AND_JOIN_ROOM_SENDER,
-            severRoomID,
-            foundConversation
+            RestFullAPI.onSuccess(
+              STATUS_CODE.STATUS_CODE_200,
+              STATUS_MESSAGE.SUCCESS,
+              {
+                severRoomID,
+                foundConversation,
+              }
+            )
           );
           socket
             .to(severRoomID)
@@ -128,7 +136,6 @@ function socket({ io }: { io: Server }) {
     /*
      * When a user sends a room message
      */
-
     interface ClientSentRoomMessData {
       conversationID: string;
       message: {
@@ -137,7 +144,6 @@ function socket({ io }: { io: Server }) {
         createdAt: Date;
       };
     }
-
     socket.on(
       EVENTS.CLIENT.SEND_ROOM_MESSAGE,
       (messageData: ClientSentRoomMessData) => {
@@ -162,7 +168,11 @@ function socket({ io }: { io: Server }) {
             foundConversation.messages;
           socket.emit(
             EVENTS.SERVER.SEND_MESSAGE.UPDATE_SENDER_MESSAGE,
-            updateMessArr
+            RestFullAPI.onSuccess(
+              STATUS_CODE.STATUS_CODE_200,
+              STATUS_MESSAGE.SUCCESS,
+              { updateMessArr }
+            )
           );
           // ? Send back data to all user in room expect sender
           socket
@@ -180,7 +190,14 @@ function socket({ io }: { io: Server }) {
      */
     socket.on(EVENTS.CLIENT.JOIN_ROOM, (roomId: string) => {
       socket.join(roomId);
-      socket.emit(EVENTS.SERVER.JOINED_ROOM, roomId);
+      socket.emit(
+        EVENTS.SERVER.JOINED_ROOM,
+        RestFullAPI.onSuccess(
+          STATUS_CODE.STATUS_CODE_200,
+          STATUS_MESSAGE.SUCCESS,
+          { roomId }
+        )
+      );
     });
     /*
      * Add new contact
@@ -220,7 +237,14 @@ function socket({ io }: { io: Server }) {
           })) as UserAttributes;
           const contactList: UserAttributes["contactList"] =
             foundUser?.contactList;
-          socket.emit(EVENTS.SERVER.SEND_NEW_CONTACT_SENDER, contactList);
+          socket.emit(
+            EVENTS.SERVER.SEND_NEW_CONTACT_SENDER,
+            RestFullAPI.onSuccess(
+              STATUS_CODE.STATUS_CODE_200,
+              STATUS_MESSAGE.SUCCESS,
+              { contactList }
+            )
+          );
         })();
       }
     );
@@ -236,7 +260,14 @@ function socket({ io }: { io: Server }) {
         const contactList: UserAttributes["contactList"] =
           foundUser?.contactList;
 
-        socket.emit(EVENTS.SERVER.GET_CONTACT_LIST, contactList);
+        socket.emit(
+          EVENTS.SERVER.GET_CONTACT_LIST,
+          RestFullAPI.onSuccess(
+            STATUS_CODE.STATUS_CODE_200,
+            STATUS_MESSAGE.SUCCESS,
+            { contactList }
+          )
+        );
       })();
     });
   });

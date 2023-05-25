@@ -1,19 +1,21 @@
+require("dotenv").config();
 import express, { Express } from "express";
+import { createServer } from "http";
+import { Server } from "socket.io";
 import config from "config";
 import cors from "cors";
 import mongoose from "mongoose";
 import logger from "./utils/logger";
 import socket from "./socket";
 import rootRouter from "../routes";
-import { createServer } from "http";
-import { Server } from "socket.io";
-// ? ============================== VARIABLES ==================================
-const port = config.get<number>("port");
-const host = config.get<string>("host");
+// ? ============================== ENV VARIABLES ==================================
+const HOST: string = process.env.HOST as string;
+const PORT: string = process.env.PORT as string;
+const DB_CONNECT_LINK: string = process.env.DB_CONNECT_LINK as string;
+const ROOT_URL: string = process.env.ROOT_URL as string;
+const ENVIRONMENT: string = process.env.ENVIRONMENT as string;
+// ? ============================== CONFIG VARIABLES =============================
 const corsOrigin = config.get<string>("corsOrigin");
-const mongoose_link = config.get<string>("mongoose_link");
-const root_url = config.get<string>("root_url");
-const environment = config.get<string>("environment");
 // ? ============================== INITIATE SERVER =============================
 const app: Express = express();
 // ? ============================== ALLOW CORS ==================================
@@ -27,16 +29,22 @@ const io = new Server(server, {
     credentials: true,
   },
 });
-// ? ============================== SOCKET ROUTER ===============================
-app.use(root_url, rootRouter);
+// ? ================================== ROUTES ===================================
+app.use(ROOT_URL, rootRouter);
 // ? ============================== RUN SERVER ==================================
-mongoose.connect(mongoose_link).then(() => {
-  server.listen(port, async () => {
-    logger.info(`Database has been connected`);
-    logger.info(
-      `🚀 Server is running on ${environment} 🚀 - http://${host}:${port}`
-    );
-
-    socket({ io });
+mongoose
+  .connect(DB_CONNECT_LINK)
+  .then(() => {
+    server.listen(PORT, async () => {
+      logger.info(`Database has been connected`);
+      logger.info(
+        `🚀 Server is running on ${ENVIRONMENT} 🚀 - http://${HOST}:${PORT}${ROOT_URL}`
+      );
+      socket({ io });
+    });
+  })
+  .catch((err) => {
+    logger.error(`Can't connect to database`);
+    logger.error(`Error: ${err}`);
+    process.exit();
   });
-});
