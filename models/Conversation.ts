@@ -3,16 +3,27 @@ import mongoose from "mongoose";
 const ConversationSchema = new mongoose.Schema(
   {
     id: { type: String },
-    members: { type: [String] },
-    messages: {
+    name: { type: String },
+    members: {
       type: [
         {
-          author: { type: String },
-          content: { type: String },
-          createdAt: { type: Date },
+          id: { type: String },
+          type: { type: String },
         },
       ],
     },
+    messages: {
+      type: [
+        {
+          sender: { id: { type: String }, type: { type: String } },
+          content: { type: String },
+          createdAt: { type: Date },
+          updatedAt: { type: Date },
+        },
+      ],
+    },
+    createdAt: { type: Date },
+    updatedAt: { type: Date },
   },
   { timestamps: true, minimize: false }
 );

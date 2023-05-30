@@ -5,7 +5,13 @@ const UserSchema = new mongoose.Schema(
     db_id: { type: String },
     chat_id: { type: String },
     type: { type: String },
-    contactList: { type: Object },
+    contactList: {
+      type: [
+        {
+          type: String,
+        },
+      ],
+    },
     status: {
       type: String,
       default: "offline",

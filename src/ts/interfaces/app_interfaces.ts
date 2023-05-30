@@ -8,12 +8,19 @@ interface UserAttributes {
 
 interface ConversationAttributes {
   id: string;
-  members: Array<string>;
+  name?: string;
+  members: Array<{ id: string; type: string }>;
   messages: Array<{
-    author: String;
+    sender: {
+      id: string;
+      type: string;
+    };
     content: String;
-    createdAt: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
   }>;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export { UserAttributes, ConversationAttributes };
