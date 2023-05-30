@@ -43,6 +43,7 @@ mongoose
           ENVIRONMENT === "PRODUCTION" ? SERVER_HOST : LOCAL_HOST
         }:${PORT}${ROOT_URL}`
       );
+
       socket({ io });
     });
   })

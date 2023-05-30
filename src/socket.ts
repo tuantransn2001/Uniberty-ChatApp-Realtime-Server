@@ -26,7 +26,6 @@ const EVENTS = {
     ROOM_MESSAGE: "ROOM_MESSAGE",
     GET_CONTACT_LIST: "GET_CONTACT_LIST",
     SEND_NEW_CONTACT_SENDER: "SEND_NEW_CONTACT_SENDER",
-    CREATED_AND_JOIN_ROOM_SENDER: "CREATED_AND_JOIN_ROOM_SENDER",
     CREATED_AND_JOIN_ROOM: "CREATED_AND_JOIN_ROOM",
     SEND_MESSAGE: {
       UPDATE_SENDER_MESSAGE: "UPDATE_SENDER_MESSAGE",
@@ -117,21 +116,15 @@ function socket({ io }: { io: Server }) {
           );
 
           socket.join(newConversationRow.id);
-          socket.emit(
-            EVENTS.SERVER.CREATED_AND_JOIN_ROOM_SENDER,
-            RestFullAPI.onSuccess(
-              STATUS_CODE.STATUS_CODE_200,
-              STATUS_MESSAGE.SUCCESS,
-              foundConversation
-            )
-          );
-          socket.to(newConversationRow.id).emit(
+
+          io.emit(
             EVENTS.SERVER.CREATED_AND_JOIN_ROOM,
             RestFullAPI.onSuccess(
               STATUS_CODE.STATUS_CODE_200,
               STATUS_MESSAGE.SUCCESS,
               {
                 conversation_id: foundConversation.id,
+                members: foundConversation.members,
                 messages: foundConversation.messages,
               }
             )
@@ -174,10 +167,7 @@ function socket({ io }: { io: Server }) {
             RestFullAPI.onSuccess(
               STATUS_CODE.STATUS_CODE_200,
               STATUS_MESSAGE.SUCCESS,
-              {
-                id: updatedConversations.id,
-                messages: updatedConversations.messages,
-              }
+              updatedConversations
             )
           );
           // ? Send back data to all user in room expect sender
