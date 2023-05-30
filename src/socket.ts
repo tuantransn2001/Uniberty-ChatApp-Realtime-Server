@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
 import { Server, Socket } from "socket.io";
-import { sortStringArray } from "../src/common";
 import logger from "../src/utils/logger";
 import User from "../models/User";
 import Conversation from "../models/Conversation";
@@ -10,6 +9,7 @@ import {
 } from "./ts/interfaces/app_interfaces";
 import RestFullAPI from "./utils/apiResponse";
 import { STATUS_CODE, STATUS_MESSAGE } from "./ts/enums/api_enums";
+import { ObjectDynamicValueAttributes } from "./ts/interfaces/global_interfaces";
 
 const EVENTS = {
   connection: "connection",
@@ -77,59 +77,65 @@ function socket({ io }: { io: Server }) {
      * When a user creates a new room
      */
     interface ClientConversationAttributes {
-      members: Array<{
-        id: string;
-        type: string;
-      }>;
-      messages: Array<{ author: string; content: string }>;
+      members: Array<{ id: string; type: string }>;
+      message: {
+        sender: {
+          id: string;
+          type: string;
+        };
+        content: string;
+      };
     }
     socket.on(
       EVENTS.CLIENT.CREATE_ROOM,
-      (conversationData: ClientConversationAttributes) => {
+      ({ members, message }: ClientConversationAttributes) => {
         (async () => {
-          // add a new user
-          const newUserRowArr = conversationData.members.map((member) => {
-            return {
-              db_id: member.id,
-              chat_id: uuidv4(),
-              type: member.type,
-            };
-          });
-          await User.insertMany(newUserRowArr);
-          // add a new conversation to the conversations object
-          const newConversation: ConversationAttributes = {
+          // * Add a new conversation to the conversations object
+          const newConversationRow: ConversationAttributes = {
             id: uuidv4(),
-            members: sortStringArray(
-              conversationData.members.map((member: any) => {
-                return member.id;
-              })
-            ),
-            messages: conversationData.messages.map((mess: any) => ({
-              ...mess,
-              createdAt: new Date(),
-            })),
+            members: members.map((member) => {
+              return {
+                id: member.id,
+                type: member.type,
+              };
+            }),
+            messages: [
+              {
+                sender: {
+                  id: message.sender.id.toString(),
+                  type: message.sender.type,
+                },
+                content: message.content,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+              },
+            ],
           };
-          const foundConversation = await Conversation.create(newConversation);
-          const severRoomID = newConversation.members.join("");
-          socket.join(severRoomID);
+
+          const foundConversation = await Conversation.create(
+            newConversationRow
+          );
+
+          socket.join(newConversationRow.id);
           socket.emit(
             EVENTS.SERVER.CREATED_AND_JOIN_ROOM_SENDER,
             RestFullAPI.onSuccess(
               STATUS_CODE.STATUS_CODE_200,
               STATUS_MESSAGE.SUCCESS,
+              foundConversation
+            )
+          );
+          socket.to(newConversationRow.id).emit(
+            EVENTS.SERVER.CREATED_AND_JOIN_ROOM,
+            RestFullAPI.onSuccess(
+              STATUS_CODE.STATUS_CODE_200,
+              STATUS_MESSAGE.SUCCESS,
               {
-                severRoomID,
-                foundConversation,
+                conversation_id: foundConversation.id,
+                messages: foundConversation.messages,
               }
             )
           );
-          socket
-            .to(severRoomID)
-            .emit(
-              EVENTS.SERVER.CREATED_AND_JOIN_ROOM,
-              severRoomID,
-              foundConversation
-            );
         })();
       }
     );
@@ -139,7 +145,7 @@ function socket({ io }: { io: Server }) {
     interface ClientSentRoomMessData {
       conversationID: string;
       message: {
-        author: string;
+        sender: { id: string; type: string };
         content: string;
         createdAt: Date;
       };
@@ -147,14 +153,9 @@ function socket({ io }: { io: Server }) {
     socket.on(
       EVENTS.CLIENT.SEND_ROOM_MESSAGE,
       (messageData: ClientSentRoomMessData) => {
-        const newMess = messageData.message;
+        const newMess = { ...messageData.message, createdAt: new Date() };
 
         (async () => {
-          const foundConversation: ConversationAttributes =
-            (await Conversation.findOne({
-              id: messageData.conversationID,
-            })) as ConversationAttributes;
-
           await Conversation.findOneAndUpdate(
             { id: messageData.conversationID },
             {
@@ -162,26 +163,35 @@ function socket({ io }: { io: Server }) {
             }
           );
 
-          const serverRoomID: string = foundConversation.members.join("");
           // ? Send back data to sender
-          const updateMessArr: ConversationAttributes["messages"] =
-            foundConversation.messages;
+          const updatedConversations: ObjectDynamicValueAttributes =
+            (await Conversation.findOne({
+              id: messageData.conversationID,
+            })) as ObjectDynamicValueAttributes;
+
           socket.emit(
             EVENTS.SERVER.SEND_MESSAGE.UPDATE_SENDER_MESSAGE,
             RestFullAPI.onSuccess(
               STATUS_CODE.STATUS_CODE_200,
               STATUS_MESSAGE.SUCCESS,
-              { updateMessArr }
+              {
+                id: updatedConversations.id,
+                messages: updatedConversations.messages,
+              }
             )
           );
           // ? Send back data to all user in room expect sender
-          socket
-            .to(serverRoomID)
-            .emit(
-              EVENTS.SERVER.SEND_MESSAGE.UPDATE_MESSAGE_EXPECT_SENDER,
-              serverRoomID,
-              foundConversation
-            );
+          socket.to(messageData.conversationID).emit(
+            EVENTS.SERVER.SEND_MESSAGE.UPDATE_MESSAGE_EXPECT_SENDER,
+            RestFullAPI.onSuccess(
+              STATUS_CODE.STATUS_CODE_200,
+              STATUS_MESSAGE.SUCCESS,
+              {
+                conversation_id: updatedConversations.id,
+                messages: updatedConversations.messages,
+              }
+            )
+          );
         })();
       }
     );
@@ -198,77 +208,6 @@ function socket({ io }: { io: Server }) {
           { roomId }
         )
       );
-    });
-    /*
-     * Add new contact
-     */
-    socket.on(
-      EVENTS.CLIENT.ADD_NEW_CONTACT,
-      ({ userID, contactUserID }: { [id: string]: string }) => {
-        // add new contact
-        (async () => {
-          // ? Add contact to sender
-          const newContactInfoItemToSender: UserAttributes =
-            (await User.findOne({
-              db_id: contactUserID,
-            })) as UserAttributes;
-
-          await User.findOneAndUpdate(
-            { db_id: userID },
-            {
-              $push: { contactList: newContactInfoItemToSender },
-            }
-          );
-          // ? Add contact to contact user
-
-          const newContactInfoItemToContact = await User.findOne({
-            db_id: userID,
-          });
-
-          await User.findOneAndUpdate(
-            { db_id: contactUserID },
-            {
-              $push: { contactList: newContactInfoItemToContact },
-            }
-          );
-
-          const foundUser: UserAttributes = (await User.findOne({
-            db_id: userID,
-          })) as UserAttributes;
-          const contactList: UserAttributes["contactList"] =
-            foundUser?.contactList;
-          socket.emit(
-            EVENTS.SERVER.SEND_NEW_CONTACT_SENDER,
-            RestFullAPI.onSuccess(
-              STATUS_CODE.STATUS_CODE_200,
-              STATUS_MESSAGE.SUCCESS,
-              { contactList }
-            )
-          );
-        })();
-      }
-    );
-    /*
-     * Get contact list
-     */
-    socket.on(EVENTS.CLIENT.GET_CONTACT_LIST, (userID: string) => {
-      (async () => {
-        const foundUser: UserAttributes = (await User.findOne({
-          db_id: userID,
-        })) as UserAttributes;
-
-        const contactList: UserAttributes["contactList"] =
-          foundUser?.contactList;
-
-        socket.emit(
-          EVENTS.SERVER.GET_CONTACT_LIST,
-          RestFullAPI.onSuccess(
-            STATUS_CODE.STATUS_CODE_200,
-            STATUS_MESSAGE.SUCCESS,
-            { contactList }
-          )
-        );
-      })();
     });
   });
 }

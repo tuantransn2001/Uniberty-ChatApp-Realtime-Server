@@ -1,3 +1,13 @@
+enum API_STUFF {
+  uniberty_baseURL = `http://103.57.223.118:8888`,
+  token = `5cc085cf-0c55-4102-ae86-1456d613aa21`,
+}
+
+enum API_RESPONSE_STATUS {
+  SUCCESS = "Success",
+  FAIL = "Fail",
+}
+
 enum STATUS_MESSAGE {
   SUCCESS = "Success",
   CONFLICT = "Conflict",
@@ -20,4 +30,4 @@ enum STATUS_CODE {
   STATUS_CODE_500 = 500, // ! Server Error
 }
 
-export { STATUS_MESSAGE, STATUS_CODE };
+export { STATUS_MESSAGE, STATUS_CODE, API_STUFF, API_RESPONSE_STATUS };

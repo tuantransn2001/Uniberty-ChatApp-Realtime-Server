@@ -9,7 +9,8 @@ import logger from "./utils/logger";
 import socket from "./socket";
 import rootRouter from "../routes";
 // ? ============================== ENV VARIABLES ==================================
-const HOST: string = process.env.HOST as string;
+const LOCAL_HOST: string = process.env.LOCAL_HOST as string;
+const SERVER_HOST: string = process.env.SERVER_HOST as string;
 const PORT: string = process.env.PORT as string;
 const DB_CONNECT_LINK: string = process.env.DB_CONNECT_LINK as string;
 const ROOT_URL: string = process.env.ROOT_URL as string;
@@ -38,7 +39,9 @@ mongoose
     server.listen(PORT, async () => {
       logger.info(`Database has been connected`);
       logger.info(
-        `🚀 Server is running on ${ENVIRONMENT} 🚀 - http://${HOST}:${PORT}${ROOT_URL}`
+        `🚀 Server is running on ${ENVIRONMENT} 🚀 - http://${
+          ENVIRONMENT === "PRODUCTION" ? SERVER_HOST : LOCAL_HOST
+        }:${PORT}${ROOT_URL}`
       );
       socket({ io });
     });

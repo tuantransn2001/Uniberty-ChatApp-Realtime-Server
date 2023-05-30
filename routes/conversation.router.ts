@@ -3,7 +3,7 @@ import ConversationController from "../controllers/conversation.controller";
 const conversationRouter = Router();
 
 conversationRouter
-  .get("/get-by-ids", ConversationController.getConversationByMemberIDList)
-  .get("/contact/get-by-user-id/:id", ConversationController.getContactList);
+  .post("/get-by-members", ConversationController.getConversationByMembers)
+  .get("/contact", ConversationController.getContactList);
 
 export default conversationRouter;
