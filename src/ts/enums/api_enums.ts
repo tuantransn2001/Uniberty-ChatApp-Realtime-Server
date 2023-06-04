@@ -16,6 +16,7 @@ enum STATUS_MESSAGE {
   NO_CONTENT = "No Content",
   UN_AUTHORIZE = "Unauthorize",
   NOT_ACCEPTABLE = "Not Acceptable",
+  SERVICES_UNAVAILABLE = "Services Unavailable",
 }
 
 enum STATUS_CODE {
@@ -28,6 +29,7 @@ enum STATUS_CODE {
   STATUS_CODE_406 = 406, // ! Not Acceptable
   STATUS_CODE_409 = 409, // ! Conflict
   STATUS_CODE_500 = 500, // ! Server Error
+  STATUS_CODE_503 = 503, // ! Services Unavailable
 }
 
 export { STATUS_MESSAGE, STATUS_CODE, API_STUFF, API_RESPONSE_STATUS };
