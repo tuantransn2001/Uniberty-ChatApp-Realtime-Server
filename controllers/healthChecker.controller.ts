@@ -1,22 +1,12 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import mongoose from "mongoose";
-import { STATUS_CODE, STATUS_MESSAGE } from "../src/ts/enums/api_enums";
 import RestFullAPI from "../src/utils/apiResponse";
 import HttpException from "../src/utils/http.exception";
-
-type HealthCheckAttributes = {
-  uptime: number;
-  message: string | HttpException;
-  timestamp: number;
-};
+import { STATUS_CODE, STATUS_MESSAGE } from "../src/ts/enums/api_enums";
+import { healthCheck } from "../src/common";
 
 class HealthCheckerController {
   public static async checkScreen(_: Request, res: Response) {
-    const healthCheck: HealthCheckAttributes = {
-      uptime: process.uptime(),
-      message: "OK",
-      timestamp: Date.now(),
-    };
     try {
       res
         .status(STATUS_CODE.STATUS_CODE_200)
@@ -31,7 +21,7 @@ class HealthCheckerController {
       healthCheck.message = error as HttpException;
       res
         .status(STATUS_CODE.STATUS_CODE_503)
-        .send(
+        .end(
           RestFullAPI.onSuccess(
             STATUS_CODE.STATUS_CODE_503,
             STATUS_MESSAGE.SERVICES_UNAVAILABLE,
@@ -64,7 +54,6 @@ class HealthCheckerController {
         }
       );
     }
-
     try {
       const isUp: boolean = (await checkData()) !== undefined;
 
