@@ -1,4 +1,4 @@
-import { HealthCheckAttributes } from "../ts/types/app_types";
+import { HealthCheckAttributes } from "../ts/types/common";
 
 const sortStringArray = (rootArray: Array<string>): Array<string> => {
   return rootArray.sort(function (a: string, b: string) {

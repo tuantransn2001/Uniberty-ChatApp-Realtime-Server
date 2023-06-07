@@ -3,13 +3,10 @@ import { Server, Socket } from "socket.io";
 import logger from "../src/utils/logger";
 import User from "../models/User";
 import Conversation from "../models/Conversation";
-import {
-  ConversationAttributes,
-  UserAttributes,
-} from "./ts/interfaces/app_interfaces";
+import { ConversationAttributes, UserAttributes } from "./ts/interfaces/common";
 import RestFullAPI from "./utils/apiResponse";
 import { STATUS_CODE, STATUS_MESSAGE } from "./ts/enums/api_enums";
-import { ObjectDynamicValueAttributes } from "./ts/interfaces/global_interfaces";
+import { ObjectDynamicValueAttributes } from "./ts/interfaces/common";
 
 const EVENTS = {
   connection: "connection",

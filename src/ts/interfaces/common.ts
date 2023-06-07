@@ -22,5 +22,8 @@ interface ConversationAttributes {
   createdAt?: Date;
   updatedAt?: Date;
 }
+interface ObjectDynamicValueAttributes {
+  [key: string]: any;
+}
 
-export { UserAttributes, ConversationAttributes };
+export { UserAttributes, ConversationAttributes, ObjectDynamicValueAttributes };

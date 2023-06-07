@@ -4,9 +4,9 @@ import { Conversation } from "../models";
 import RestFullAPI from "../src/utils/apiResponse";
 import { STATUS_CODE, STATUS_MESSAGE } from "../src/ts/enums/api_enums";
 import HttpException from "../src/utils/http.exception";
-import { ConversationAttributes } from "../src/ts/interfaces/app_interfaces";
+import { ConversationAttributes } from "../src/ts/interfaces/common";
 import UnibertyAPIServices from "../src/services/uniberty";
-import { ObjectDynamicValueAttributes } from "../src/ts/interfaces/global_interfaces";
+import { ObjectDynamicValueAttributes } from "../src/ts/interfaces/common";
 
 class ConversationController {
   public static async getConversationByMembers(req: Request, res: Response) {
