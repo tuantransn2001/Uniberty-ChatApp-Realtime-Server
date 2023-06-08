@@ -2,6 +2,8 @@ import { IncomingHttpHeaders } from "http2";
 import { Request, Response, NextFunction } from "express";
 import config from "config";
 import jwt from "jsonwebtoken";
+import { STATUS_CODE, STATUS_MESSAGE } from "../src/ts/enums/api_enums";
+import RestFullAPI from "../src/utils/apiResponse";
 
 interface MyCustomsHeaders {
   token: string;
@@ -23,16 +25,25 @@ const authenticate = async (
     if (isAuth) {
       return next();
     } else {
-      res.status(401).send({
-        status: "Unauthorised",
-        message: "Client-Error && In-Valid Token",
-      });
+      res
+        .status(STATUS_CODE.STATUS_CODE_401)
+        .send(
+          RestFullAPI.onSuccess(
+            STATUS_CODE.STATUS_CODE_200,
+            STATUS_MESSAGE.UN_AUTHORIZE,
+            { message: "Client-Error && In-Valid Token" }
+          )
+        );
     }
   } catch (err) {
-    res.status(500).send({
-      status: "Fail",
-      message: "You are not logged in!",
-    });
+    res
+      .status(STATUS_CODE.STATUS_CODE_500)
+      .send(
+        RestFullAPI.onSuccess(
+          STATUS_CODE.STATUS_CODE_500,
+          STATUS_MESSAGE.SERVER_ERROR
+        )
+      );
   }
 };
 export default authenticate;

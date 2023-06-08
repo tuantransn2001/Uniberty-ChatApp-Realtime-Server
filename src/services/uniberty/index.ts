@@ -1,5 +1,5 @@
 import HttpException from "../../utils/http.exception";
-import { ObjectDynamicValueAttributes } from "../../ts/interfaces/global_interfaces";
+import { ObjectDynamicValueAttributes } from "../../ts/interfaces/common";
 import { API_STUFF, API_RESPONSE_STATUS } from "../../ts/enums/api_enums";
 import RestFullAPIRequest from "../../utils/apiRequest";
 interface IDListAttributes {
