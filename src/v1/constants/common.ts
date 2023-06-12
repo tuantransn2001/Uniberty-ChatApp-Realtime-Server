@@ -1,0 +1,32 @@
+const EVENTS = {
+  connection: "connection",
+  CLIENT: {
+    CREATE_ROOM: "CREATE_ROOM",
+    SEND_ROOM_MESSAGE: "SEND_ROOM_MESSAGE",
+    JOIN_ROOM: "JOIN_ROOM",
+    GET_CONTACT_LIST: "GET_CONTACT_LIST",
+    ADD_NEW_CONTACT: "ADD_NEW_CONTACT",
+  },
+  SERVER: {
+    ROOMS: "ROOMS",
+    JOINED_ROOM: "JOINED_ROOM",
+    ROOM_MESSAGE: "ROOM_MESSAGE",
+    GET_CONTACT_LIST: "GET_CONTACT_LIST",
+    SEND_NEW_CONTACT_SENDER: "SEND_NEW_CONTACT_SENDER",
+    CREATED_AND_JOIN_ROOM: "CREATED_AND_JOIN_ROOM",
+    SEND_MESSAGE: {
+      UPDATE_SENDER_MESSAGE: "UPDATE_SENDER_MESSAGE",
+      UPDATE_MESSAGE_EXPECT_SENDER: "UPDATE_MESSAGE_EXPECT_SENDER",
+    },
+    STATUS: {
+      ONLINE: "ONLINE",
+      OFFLINE: "OFFLINE",
+    },
+  },
+};
+const corsConfig = {
+  origin: "http://localhost:5173",
+  credentials: true,
+};
+
+export { EVENTS, corsConfig };
