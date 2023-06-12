@@ -1,11 +1,12 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./src/v1/app.ts",
   "author": "Tuan",
   "license": "",
   "scripts": {
-    "dev": "nodemon --config nodemon.json src/app.ts"
+    "build:prod:v1": "webpack --config webpack.config.prod.js",
+    "prod:start:v1": "nodemon build/production/v1/app.js"
   },
   "devDependencies": {
     "@types/config": "^0.0.38",
@@ -14,13 +15,16 @@
     "@types/node": "^15.12.4",
     "@types/pino": "^6.3.8",
     "@types/randomstring": "^1.1.8",
+    "@types/socketio-jwt-auth": "^0.0.2",
     "@types/uuid": "^9.0.1",
+    "ts-loader": "^9.4.3",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.4"
   },
   "dependencies": {
     "@types/pino-std-serializers": "^4.0.0",
     "axios": "^1.4.0",
+    "clean-webpack-plugin": "^4.0.0",
     "config": "^3.3.6",
     "cors": "^2.8.5",
     "dayjs": "^1.10.5",
@@ -33,6 +37,11 @@
     "pino-pretty": "^5.1.0",
     "randomstring": "^1.2.3",
     "socket.io": "^4.1.2",
-    "uuid": "^9.0.0"
+    "socketio-jwt": "^4.6.2",
+    "socketio-jwt-auth": "^0.2.1",
+    "uuid": "^9.0.0",
+    "webpack": "^5.86.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-node-externals": "^3.0.0"
   }
 }
