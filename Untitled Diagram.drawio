@@ -1,13 +1,13 @@
-<mxfile host="app.diagrams.net" modified="2023-06-14T03:56:18.159Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" version="21.3.8" etag="knhISCtc64hGdql28ALM" type="github">
+<mxfile host="app.diagrams.net" modified="2023-06-14T04:05:04.252Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="bgx2ZV88uCAvTEiAexoa" version="21.3.8" type="github">
   <diagram id="prtHgNgQTEPvFCAcTncT" name="Page-1">
-    <mxGraphModel dx="1223" dy="871" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1194" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="dNxyNK7c78bLwvsdeMH5-11" value="Orgchart" style="swimlane;html=1;startSize=20;horizontal=1;containerType=tree;glass=0;" parent="1" vertex="1">
+        <mxCell id="dNxyNK7c78bLwvsdeMH5-11" value="App" style="swimlane;html=1;startSize=20;horizontal=1;containerType=tree;glass=0;" parent="1" vertex="1">
           <mxGeometry x="40" y="80" width="710" height="290" as="geometry" />
         </mxCell>
-        <UserObject label="%name%&lt;br&gt;&lt;i style=&quot;color: gray&quot;&gt;%position%&lt;/i&gt;&lt;br&gt;&lt;a href=&quot;mailto:%email%&quot;&gt;Email&lt;/a&gt;" name="Tessa Miller" position="CFO" location="Office 1" email="me@example.com" placeholders="1" link="https://www.draw.io" id="dNxyNK7c78bLwvsdeMH5-12">
+        <UserObject label="App" name="Tessa Miller" position="CFO" location="Office 1" email="me@example.com" placeholders="1" link="https://www.draw.io" id="dNxyNK7c78bLwvsdeMH5-12">
           <mxCell style="label;image=https://cdn3.iconfinder.com/data/icons/user-avatars-1/512/users-3-128.png;whiteSpace=wrap;html=1;rounded=0;glass=0;treeMoving=1;treeFolding=1;" parent="dNxyNK7c78bLwvsdeMH5-11" vertex="1">
             <mxGeometry x="260" y="50" width="180" height="70" as="geometry" />
           </mxCell>
@@ -15,7 +15,7 @@
         <mxCell id="dNxyNK7c78bLwvsdeMH5-13" value="" style="endArrow=blockThin;endFill=1;fontSize=11;edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;" parent="dNxyNK7c78bLwvsdeMH5-11" source="dNxyNK7c78bLwvsdeMH5-12" target="dNxyNK7c78bLwvsdeMH5-14" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <UserObject label="%name%&lt;br&gt;&lt;i style=&quot;color: gray&quot;&gt;%position%&lt;/i&gt;&lt;br&gt;&lt;a href=&quot;mailto:%email%&quot;&gt;Email&lt;/a&gt;" name="Edward Morrison" position="Brand Manager" location="Office 2" email="me@example.com" placeholders="1" link="https://www.draw.io" id="dNxyNK7c78bLwvsdeMH5-14">
+        <UserObject label="Provider" name="Edward Morrison" position="Brand Manager" location="Office 2" email="me@example.com" placeholders="1" link="https://www.draw.io" id="dNxyNK7c78bLwvsdeMH5-14">
           <mxCell style="label;image=https://cdn3.iconfinder.com/data/icons/user-avatars-1/512/users-10-3-128.png;whiteSpace=wrap;html=1;rounded=0;glass=0;treeFolding=1;treeMoving=1;" parent="dNxyNK7c78bLwvsdeMH5-11" vertex="1">
             <mxGeometry x="40" y="180" width="180" height="80" as="geometry" />
           </mxCell>
@@ -23,7 +23,7 @@
         <mxCell id="dNxyNK7c78bLwvsdeMH5-15" value="" style="endArrow=blockThin;endFill=1;fontSize=11;edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;" parent="dNxyNK7c78bLwvsdeMH5-11" source="dNxyNK7c78bLwvsdeMH5-12" target="dNxyNK7c78bLwvsdeMH5-16" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <UserObject label="%name%&lt;br&gt;&lt;i style=&quot;color: gray&quot;&gt;%position%&lt;/i&gt;&lt;br&gt;&lt;a href=&quot;mailto:%email%&quot;&gt;Email&lt;/a&gt;" name="Evan Valet" position="HR Director" location="Office 4" email="me@example.com" placeholders="1" link="https://www.draw.io" id="dNxyNK7c78bLwvsdeMH5-16">
+        <UserObject label="Controller" name="Evan Valet" position="HR Director" location="Office 4" email="me@example.com" placeholders="1" link="https://www.draw.io" id="dNxyNK7c78bLwvsdeMH5-16">
           <mxCell style="label;image=https://cdn3.iconfinder.com/data/icons/user-avatars-1/512/users-9-2-128.png;whiteSpace=wrap;html=1;rounded=0;glass=0;treeFolding=1;treeMoving=1;" parent="dNxyNK7c78bLwvsdeMH5-11" vertex="1">
             <mxGeometry x="260" y="180" width="180" height="80" as="geometry" />
           </mxCell>
@@ -31,11 +31,77 @@
         <mxCell id="dNxyNK7c78bLwvsdeMH5-17" value="" style="endArrow=blockThin;endFill=1;fontSize=11;edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;" parent="dNxyNK7c78bLwvsdeMH5-11" source="dNxyNK7c78bLwvsdeMH5-12" target="dNxyNK7c78bLwvsdeMH5-18" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <UserObject label="%name%&lt;br&gt;&lt;i style=&quot;color: gray&quot;&gt;%position%&lt;/i&gt;&lt;br&gt;&lt;a href=&quot;mailto:%email%&quot;&gt;Email&lt;/a&gt;" name="Alison Donovan" position="System Admin" location="Office 3" email="me@example.com" placeholders="1" link="https://www.draw.io" id="dNxyNK7c78bLwvsdeMH5-18">
+        <UserObject label="Import" name="Alison Donovan" position="System Admin" location="Office 3" email="me@example.com" placeholders="1" link="https://www.draw.io" id="dNxyNK7c78bLwvsdeMH5-18">
           <mxCell style="label;image=https://cdn3.iconfinder.com/data/icons/user-avatars-1/512/users-2-128.png;whiteSpace=wrap;html=1;rounded=0;glass=0;" parent="dNxyNK7c78bLwvsdeMH5-11" vertex="1">
             <mxGeometry x="490" y="180" width="180" height="80" as="geometry" />
           </mxCell>
         </UserObject>
+        <mxCell id="VmZstkeIvPv8drtJz3Ct-1" value="Conversation.module.ts" style="swimlane;html=1;startSize=20;horizontal=1;containerType=tree;glass=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="890" width="710" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="VmZstkeIvPv8drtJz3Ct-11" value="Conversation.module.ts" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="VmZstkeIvPv8drtJz3Ct-1">
+          <mxGeometry x="280" y="40" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VmZstkeIvPv8drtJz3Ct-12" value="Conversation.controller.ts" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="VmZstkeIvPv8drtJz3Ct-1">
+          <mxGeometry x="40" y="160" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VmZstkeIvPv8drtJz3Ct-13" value="Conversation.services.ts" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="VmZstkeIvPv8drtJz3Ct-1">
+          <mxGeometry x="275" y="160" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VmZstkeIvPv8drtJz3Ct-14" value="Conversation.provider.ts" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="VmZstkeIvPv8drtJz3Ct-1">
+          <mxGeometry x="510" y="160" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VmZstkeIvPv8drtJz3Ct-28" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="VmZstkeIvPv8drtJz3Ct-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="350" y="100" as="sourcePoint" />
+            <mxPoint x="350" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VmZstkeIvPv8drtJz3Ct-29" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="VmZstkeIvPv8drtJz3Ct-1" target="VmZstkeIvPv8drtJz3Ct-12">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="350" y="100" as="sourcePoint" />
+            <mxPoint x="360" y="170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VmZstkeIvPv8drtJz3Ct-30" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.573;entryY=-0.05;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="VmZstkeIvPv8drtJz3Ct-1" source="VmZstkeIvPv8drtJz3Ct-11" target="VmZstkeIvPv8drtJz3Ct-14">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="355" y="110" as="sourcePoint" />
+            <mxPoint x="125" y="170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VmZstkeIvPv8drtJz3Ct-31" value="Conversation.schema.ts" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="VmZstkeIvPv8drtJz3Ct-1">
+          <mxGeometry x="40" y="40" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VmZstkeIvPv8drtJz3Ct-32" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="VmZstkeIvPv8drtJz3Ct-1" source="VmZstkeIvPv8drtJz3Ct-11" target="VmZstkeIvPv8drtJz3Ct-31">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="350" y="100" as="sourcePoint" />
+            <mxPoint x="115" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VmZstkeIvPv8drtJz3Ct-33" value="Conversation provider: auto create model on database using database provider" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="VmZstkeIvPv8drtJz3Ct-1">
+          <mxGeometry x="480" y="230" width="220" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="VmZstkeIvPv8drtJz3Ct-15" value="Database.module.ts" style="swimlane;html=1;startSize=20;horizontal=1;containerType=tree;glass=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="400" width="710" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="VmZstkeIvPv8drtJz3Ct-16" value="Database.module.ts" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="VmZstkeIvPv8drtJz3Ct-15">
+          <mxGeometry x="280" y="40" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VmZstkeIvPv8drtJz3Ct-17" value="Database.provider.ts" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="VmZstkeIvPv8drtJz3Ct-15">
+          <mxGeometry x="270" y="170" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VmZstkeIvPv8drtJz3Ct-24" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="VmZstkeIvPv8drtJz3Ct-15" source="VmZstkeIvPv8drtJz3Ct-16" target="VmZstkeIvPv8drtJz3Ct-17">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="450" y="240" as="sourcePoint" />
+            <mxPoint x="500" y="190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VmZstkeIvPv8drtJz3Ct-25" value="Connect database here using mongoose" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="VmZstkeIvPv8drtJz3Ct-15">
+          <mxGeometry x="240" y="240" width="220" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="VmZstkeIvPv8drtJz3Ct-34" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;API:&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;1: Get Conversation by member {id,type}&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;2. Get ContactList&lt;/span&gt;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="850" width="220" height="30" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
